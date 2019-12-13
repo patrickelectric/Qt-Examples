@@ -6,7 +6,9 @@ Item {
     height: 480
 
     QQuickOpenGL {
-        anchors.fill: parent
+        width: 100
+        height: 100
+        anchors.right: parent.right
         Timer {
             interval: 50; running: true; repeat: true
             onTriggered: parent.shift += 2

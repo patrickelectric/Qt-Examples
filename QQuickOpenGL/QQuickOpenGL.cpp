@@ -81,7 +81,10 @@ void QQuickOpenGL::paint()
     _shaderProgram->setAttributeArray(0, GL_FLOAT, values, 2);
     _shaderProgram->setUniformValue("shift", static_cast<float>((_shift%100)/100.0f));
 
-    glViewport(0, 0, width(), height());
+    // We need to fix the opengl origin with our actual item position
+    auto point = parentItem()->mapFromItem(this, {0, 0});
+    point += QPointF{0, static_cast<float>(parentItem()->height() - height())};
+    glViewport(point.x(), point.y(), width(), height());
     glDisable(GL_DEPTH_TEST);
     glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT);
